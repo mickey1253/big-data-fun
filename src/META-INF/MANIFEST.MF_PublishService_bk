@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: d06hdfs.cn.mickey.bigdata.hadooprpc.service.PublishService
+ Util
+
