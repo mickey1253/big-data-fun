@@ -45,7 +45,8 @@ public class HdfsClientHAToRemoteDay06 {
     @Test
     public void testUpload() throws Exception{
         Thread.sleep(2000);
-        fs.copyFromLocalFile(new Path("C:/Users/505007855/BIG_DATA/Hadoop/TOOLS/InstallationPackage/download.txt"), new Path("/download.txt.copy"));
+       fs.copyFromLocalFile(new Path("C:/Users/505007855/BIG_DATA/Hadoop/TOOLS/InstallationPackage/download.txt"), new Path("/download.txt.copy"));
+
         fs.close();
     }
 
@@ -80,7 +81,7 @@ public class HdfsClientHAToRemoteDay06 {
 
     @Test
     public void testDelet() throws IOException {
-        boolean delete = fs.delete(new Path("/download.txt.copy"), true);
+        boolean delete = fs.delete(new Path("/ToolsForBigData"), true);
 
         System.out.println("Delete successfully? " + delete);
     }

@@ -47,7 +47,7 @@ public class HdfsClientLocalToRemoteDay06 {
 
     @Test
     public void testDelete() throws Exception{
-        boolean delete = fs.delete(new Path("/wordcount"), true);
+        boolean delete = fs.delete(new Path("/wordmedian"), true);
         System.out.println("Delete Result is: " + delete);
     }
 
