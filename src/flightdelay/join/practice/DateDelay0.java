@@ -6,15 +6,15 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class DateDelay implements WritableComparable<DateDelay> {
+public class DateDelay0 implements WritableComparable<DateDelay0> {
 
-    public Datee date;
+    public Datee0 date;
     public int arriveDelay;
 
-    public DateDelay(){}
+    public DateDelay0(){}
 
 
-    public DateDelay(Datee date, int arriveDelay) {
+    public DateDelay0(Datee0 date, int arriveDelay) {
         this.date = date;
         this.arriveDelay = arriveDelay;
     }
@@ -32,7 +32,7 @@ public class DateDelay implements WritableComparable<DateDelay> {
     @Override
     public void readFields(DataInput in) throws IOException {
 
-        date = new Datee();
+        date = new Datee0();
         date.readFields(in);
         arriveDelay = in.readInt();
     }
@@ -40,7 +40,7 @@ public class DateDelay implements WritableComparable<DateDelay> {
 
 
     @Override
-    public int compareTo(DateDelay dateDelay) {
+    public int compareTo(DateDelay0 dateDelay) {
 
         int response = this.date.compareTo(dateDelay.date);
         if(response == 0){

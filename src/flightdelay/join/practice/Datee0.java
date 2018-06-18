@@ -6,16 +6,16 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class Datee implements WritableComparable<Datee> {
+public class Datee0 implements WritableComparable<Datee0> {
 
     public int year;
     public int month;
     public int day;
 
-    public Datee() {
+    public Datee0() {
     }
 
-    public Datee(int year, int month, int day) {
+    public Datee0(int year, int month, int day) {
         this.year = year;
         this.month = month;
         this.day = day;
@@ -43,8 +43,8 @@ public class Datee implements WritableComparable<Datee> {
 
     @Override
     public boolean equals(Object obj){
-        if(obj instanceof Datee){
-            Datee date = (Datee) obj;
+        if(obj instanceof Datee0){
+            Datee0 date = (Datee0) obj;
             if(year == date.year && month == date.month && day == date.day){
                 return true;
             }
@@ -54,7 +54,7 @@ public class Datee implements WritableComparable<Datee> {
     }
 
     @Override
-    public int compareTo(Datee date) {
+    public int compareTo(Datee0 date) {
         int response = this.year - date.year;
         if(response == 0){
             response = this.month - date.month;

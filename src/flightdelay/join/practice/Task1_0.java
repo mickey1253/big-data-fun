@@ -91,97 +91,97 @@ import java.util.Map;
  */
 
 
-public class Task1 extends Configured implements Tool {
+public class Task1_0 extends Configured implements Tool {
 
     private static final String DESTINATION = "Dest";
 
-    public static class MapSideJoinMapper extends Mapper<LongWritable, Text, DateDelay, DelayWeather>{
+    public static class MapSideJoinMapper extends Mapper<LongWritable, Text, DateDelay0, DelayWeather0>{
 
-            private Map<Datee, Weather> map = new HashMap<Datee, Weather>();
+        private Map<Datee0, Weather> map = new HashMap<Datee0, Weather>();
 
-            private String destination;
+        private String destination;
 
-            @Override
-            protected void setup(Mapper<LongWritable, Text, DateDelay, DelayWeather>.Context context) throws IOException, InterruptedException{
-                    destination = context.getConfiguration().get(DESTINATION);
-                    BufferedReader reader = new BufferedReader(new FileReader("sfo_weather.csv"));
-                    String line;
-                    String[] wStr;
-                    Datee datee;
-                    Weather weather;
-                    while((line = reader.readLine()) != null){
+        @Override
+        protected void setup(Mapper<LongWritable, Text, DateDelay0, DelayWeather0>.Context context) throws IOException, InterruptedException{
+            destination = context.getConfiguration().get(DESTINATION);
+            BufferedReader reader = new BufferedReader(new FileReader("sfo_weather.csv"));
+            String line;
+            String[] wStr;
+            Datee0 datee;
+            Weather weather;
+            while((line = reader.readLine()) != null){
 
-                        wStr = StringUtils.split(line, '\\', ',');
+                wStr = StringUtils.split(line, '\\', ',');
 
-                        if(wStr[1].equals("YEAR")){
-                            continue;
-                        }
-
-                        datee = new Datee(Integer.parseInt(wStr[1]), Integer.parseInt(wStr[2]), Integer.parseInt(wStr[3]));
-                        weather = new Weather(Integer.parseInt(wStr[4]), Integer.parseInt(wStr[5]), Integer.parseInt(wStr[6]));
-                        map.put(datee, weather);
-                    }
-
-                    reader.close();
+                if(wStr[1].equals("YEAR")){
+                    continue;
                 }
 
+                datee = new Datee0(Integer.parseInt(wStr[1]), Integer.parseInt(wStr[2]), Integer.parseInt(wStr[3]));
+                weather = new Weather(Integer.parseInt(wStr[4]), Integer.parseInt(wStr[5]), Integer.parseInt(wStr[6]));
+                map.put(datee, weather);
+            }
 
-            @Override
-            protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, DateDelay, DelayWeather>.Context context) throws IOException, InterruptedException {
+            reader.close();
+        }
 
-                String[] delays = StringUtils.split(value.toString(), '\\', ',');
-                DateDelay dateDelay;
-                Datee datee;
-                if (delays[0].equalsIgnoreCase("Year")) {
+
+        @Override
+        protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, DateDelay0, DelayWeather0>.Context context) throws IOException, InterruptedException {
+
+            String[] delays = StringUtils.split(value.toString(), '\\', ',');
+            DateDelay0 dateDelay;
+            Datee0 datee;
+            if (delays[0].equalsIgnoreCase("Year")) {
+                return;
+            }
+
+            if (delays[17].trim().equalsIgnoreCase(destination)) {
+                boolean xx = Utils.replaceNAWithZero(delays);
+                if (xx) {
                     return;
                 }
 
-                if (delays[17].trim().equalsIgnoreCase(destination)) {
-                    boolean xx = Utils.replaceNAWithZero(delays);
-                    if (xx) {
-                        return;
-                    }
+                datee = new Datee0(Integer.parseInt(delays[0]), Integer.parseInt(delays[1]), Integer.parseInt(delays[2]));
 
-                    datee = new Datee(Integer.parseInt(delays[0]), Integer.parseInt(delays[1]), Integer.parseInt(delays[2]));
-
-                    if (map.containsKey(datee)) {
-                        dateDelay = new DateDelay(datee, Integer.parseInt(delays[14]));
-                        FlightDelay flightDelay = new FlightDelay(Integer.parseInt(delays[4]),
-                                Integer.parseInt(delays[6]),
-                                delays[8],
-                                Integer.parseInt(delays[9]),
-                                Integer.parseInt(delays[11]),
-                                Integer.parseInt(delays[14]),
-                                Integer.parseInt(delays[15]),
-                                delays[16],
-                                delays[17]
-                        );
-                        DelayWeather delayWeather = new DelayWeather();
-                        delayWeather.flightDelay = flightDelay;
-                        delayWeather.weather = map.get(datee);
-                        context.write(dateDelay, delayWeather);
-                    }
+                if (map.containsKey(datee)) {
+                    dateDelay = new DateDelay0(datee, Integer.parseInt(delays[14]));
+                    FlightDelay0 flightDelay = new FlightDelay0(Integer.parseInt(delays[4]),
+                            Integer.parseInt(delays[6]),
+                            delays[8],
+                            Integer.parseInt(delays[9]),
+                            Integer.parseInt(delays[11]),
+                            Integer.parseInt(delays[14]),
+                            Integer.parseInt(delays[15]),
+                            delays[16],
+                            delays[17]
+                    );
+                    DelayWeather0 delayWeather = new DelayWeather0();
+                    delayWeather.flightDelay = flightDelay;
+                    delayWeather.weather = map.get(datee);
+                    context.write(dateDelay, delayWeather);
                 }
-             }
-       }
+            }
+        }
+    }
 
-       public static final class MapSideJoinReducer extends Reducer<DateDelay, DelayWeather, DateDelay, DelayWeather>{
+    public static final class MapSideJoinReducer extends Reducer<DateDelay0, DelayWeather0, DateDelay0, DelayWeather0>{
 
-           @Override
-           protected void reduce(DateDelay key, Iterable<DelayWeather> values, Reducer<DateDelay, DelayWeather, DateDelay, DelayWeather>.Context context) throws IOException, InterruptedException {
-               Iterator<DelayWeather> iterator = values.iterator();
+        @Override
+        protected void reduce(DateDelay0 key, Iterable<DelayWeather0> values, Reducer<DateDelay0, DelayWeather0, DateDelay0, DelayWeather0>.Context context) throws IOException, InterruptedException {
+            Iterator<DelayWeather0> iterator = values.iterator();
 
-               while(iterator.hasNext()){
-                   context.write(key, iterator.next());
-               }
-           }
-       }
+            while(iterator.hasNext()){
+                context.write(key, iterator.next());
+            }
+        }
+    }
 
 
 
     @Override
     public int run(String[] args) throws Exception {
-        Job job = Job.getInstance(getConf(), "Task1");
+        Job job = Job.getInstance(getConf(), "Task1_0");
         Configuration conf = job.getConfiguration();
 
 
@@ -198,11 +198,11 @@ public class Task1 extends Configured implements Tool {
         job.setJarByClass(getClass());
         job.setMapperClass(MapSideJoinMapper.class);
         job.setReducerClass(MapSideJoinReducer.class);
-        job.setOutputFormatClass(DelayFileOutputFormat.class);
-        job.setMapOutputKeyClass(DateDelay.class);
-        job.setMapOutputValueClass(DelayWeather.class);
-        job.setOutputKeyClass(DateDelay.class);
-        job.setOutputValueClass(DelayWeather.class);
+        job.setOutputFormatClass(DelayFileOutputFormat0.class);
+        job.setMapOutputKeyClass(DateDelay0.class);
+        job.setMapOutputValueClass(DelayWeather0.class);
+        job.setOutputKeyClass(DateDelay0.class);
+        job.setOutputValueClass(DelayWeather0.class);
         job.setNumReduceTasks(2);
 
         return job.waitForCompletion(true)? 0:1;
@@ -212,7 +212,7 @@ public class Task1 extends Configured implements Tool {
     public static void main(String[] args) {
         int result = 0;
         try{
-            result = ToolRunner.run(new Configuration(), new Task1(), args);
+            result = ToolRunner.run(new Configuration(), new Task1_0(), args);
         }catch (Exception e){
             e.printStackTrace();
         }

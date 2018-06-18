@@ -6,7 +6,7 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class FlightDelay implements Writable {
+public class FlightDelay0 implements Writable {
 
     public int depTime;
     public int arrTime;
@@ -18,10 +18,10 @@ public class FlightDelay implements Writable {
     public String origin;
     public String destination;
 
-    public FlightDelay() {
+    public FlightDelay0() {
     }
 
-    public FlightDelay(int depTime, int arrTime, String uniqueCarrier, int flightNum, int actualElapsedTime, int arrDelay, int depDelay, String origin, String destination) {
+    public FlightDelay0(int depTime, int arrTime, String uniqueCarrier, int flightNum, int actualElapsedTime, int arrDelay, int depDelay, String origin, String destination) {
         this.depTime = depTime;
         this.arrTime = arrTime;
         this.uniqueCarrier = uniqueCarrier;

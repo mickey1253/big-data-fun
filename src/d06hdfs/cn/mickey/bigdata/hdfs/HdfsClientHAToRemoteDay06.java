@@ -81,7 +81,7 @@ public class HdfsClientHAToRemoteDay06 {
 
     @Test
     public void testDelet() throws IOException {
-        boolean delete = fs.delete(new Path("/ToolsForBigData"), true);
+        boolean delete = fs.delete(new Path("/user/hadoop"), true);
 
         System.out.println("Delete successfully? " + delete);
     }

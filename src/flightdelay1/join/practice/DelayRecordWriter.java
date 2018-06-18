@@ -1,6 +1,4 @@
-package flightdelay.join.practice;
-
-
+package flightdelay1.join.practice;
 
 import org.apache.hadoop.mapreduce.RecordWriter;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
@@ -8,29 +6,34 @@ import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class DelayRecordWrite extends RecordWriter<DateDelay, DelayWeather> {
+public class DelayRecordWriter extends RecordWriter<DateDelay, DelayWeather> {
 
     private DataOutputStream out;
+
     private final static String SEPERATOR = ",";
 
-    public DelayRecordWrite(DataOutputStream out) {
+    public DelayRecordWriter() {
+    }
+
+    public DelayRecordWriter(DataOutputStream out) {
         this.out = out;
     }
 
     @Override
-    public void write(DateDelay key, DelayWeather value) throws IOException, InterruptedException {
+    public void write(DateDelay dateDelay, DelayWeather delayWeather) throws IOException, InterruptedException {
+
         StringBuilder builder = new StringBuilder();
-        builder.append(key.date);
+        builder.append(dateDelay.datee);
         builder.append(SEPERATOR);
-        builder.append(value);
+        builder.append(delayWeather);
         builder.append("\n");
         out.write(builder.toString().getBytes());
-
     }
 
     @Override
     public void close(TaskAttemptContext taskAttemptContext) throws IOException, InterruptedException {
 
         out.close();
+
     }
 }
