@@ -6,9 +6,9 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class DelayWeather implements Writable {
+public class DelayWeather0 implements Writable {
 
-    public FlightDelay flightDelay;
+    public FlightDelay0 flightDelay;
     public Weather weather;
 
     @Override
@@ -20,7 +20,7 @@ public class DelayWeather implements Writable {
     @Override
     public void readFields(DataInput in) throws IOException {
 
-        flightDelay = new FlightDelay();
+        flightDelay = new FlightDelay0();
         weather = new Weather();
 
         flightDelay.readFields(in);
