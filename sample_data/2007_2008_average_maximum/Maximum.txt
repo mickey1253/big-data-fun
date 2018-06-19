@@ -1,0 +1,13 @@
+第二题：求最大值：
+
+HDFS系统中/user/horton/flights下有两个文件， 2007.cvs 和 2008.cvs （结构和上面的附件第一题里的一样）
+要求写一个mapreduce程序，实现以下功能：
+
+1. 求出每个Arrival airport code中arrival delay时间最长的一个
+2. 结果存放在 HDFS中的 /user/horton/task1下
+3. 每条结果包含以下数据： Arrival airport code, Maximu Arrival delay, Departure airport code, Year, Month, DayOfMonth,每个feild之间用逗号隔开
+4. 输出结果按照2007和2008分成两个文件
+5. 最终结果以Arrival airport code的字母正序排列
+
+
+
