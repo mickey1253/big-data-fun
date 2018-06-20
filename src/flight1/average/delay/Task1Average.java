@@ -2,6 +2,7 @@ package flight1.average.delay;
 
 
 import org.apache.hadoop.conf.Configured;
+import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.util.Tool;
 
 /**
@@ -54,7 +55,7 @@ Understand:
 
 public class Task1Average extends Configured implements Tool {
 
-    public static class AverageMapper
+    public static class AverageMapper extends Mapper<>
 
     @Override
     public int run(String[] args) throws Exception {
