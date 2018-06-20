@@ -2,8 +2,14 @@ package flight1.average.delay;
 
 
 import org.apache.hadoop.conf.Configured;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.util.StringUtils;
 import org.apache.hadoop.util.Tool;
+
+import java.io.IOException;
 
 /**
 Write and execute a Java MapReduce application that satisfies all of the following criteria:
@@ -55,7 +61,25 @@ Understand:
 
 public class Task1Average extends Configured implements Tool {
 
-    public static class AverageMapper extends Mapper<>
+    public static class AverageMapper extends Mapper<LongWritable, Text, Text, IntWritable>{
+
+        @Override
+        protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+            String[] airCodes = StringUtils.split(value.toString(), '\\', ',');
+            if(airCodes[16].equalsIgnoreCase("Origin")){
+                return;
+            }
+
+            String airCode = airCodes[16];
+            int delay = Integer.parseInt(airCodes[15]);
+
+            context.write(new Text(airCode), new IntWritable(delay));
+
+        }
+
+
+
+    }
 
     @Override
     public int run(String[] args) throws Exception {

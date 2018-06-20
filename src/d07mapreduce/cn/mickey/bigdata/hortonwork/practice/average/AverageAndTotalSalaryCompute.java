@@ -20,10 +20,8 @@ public class AverageAndTotalSalaryCompute {
      * 17-JUN-03 AD_PRES 25798.9 90 Sex at position 4th and salary at 9th
      * position
      */
-    public static class MapperClass extends
-            Mapper<LongWritable, Text, Text, FloatWritable> {
-        public void map(LongWritable key, Text empRecord, Context con)
-                throws IOException, InterruptedException {
+    public static class MapperClass extends Mapper<LongWritable, Text, Text, FloatWritable> {
+        public void map(LongWritable key, Text empRecord, Context con) throws IOException, InterruptedException {
             String[] word = empRecord.toString().split("\\t");
             String sex = word[3];
             try {
