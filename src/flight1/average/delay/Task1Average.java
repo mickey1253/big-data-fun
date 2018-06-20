@@ -1,6 +1,9 @@
 package flight1.average.delay;
 
 
+import org.apache.hadoop.conf.Configured;
+import org.apache.hadoop.util.Tool;
+
 /**
 Write and execute a Java MapReduce application that satisfies all of the following criteria:
 
@@ -38,7 +41,8 @@ Understand:
  1. Map side: Airport codes (column 17) as the key, departure delay (column 16) as the value;
  2. Reduce side: get the sum and the count of the departure delay;
  3. Reduce side write the result: (key, sum / count)
- 4. Set Partition: public static HashMap<String, Integer> airCode = new HashMap<>();
+ 4. Set Partition:
+   public static HashMap<String, Integer> airCode = new HashMap<>();
      static{
          airCode.put("A", 0);
          airCode.put("B", 0);
@@ -48,5 +52,12 @@ Understand:
      }
  * */
 
-public class Task1Average {
+public class Task1Average extends Configured implements Tool {
+
+    public static class AverageMapper
+
+    @Override
+    public int run(String[] args) throws Exception {
+        return 0;
+    }
 }
